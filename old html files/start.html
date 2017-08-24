@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Glass Castle - Start</title>
+  <!--Add Phaser Framework library-->
+  <script src="phaser.min.js"></script>
+  <!--Add custom stylesheet-->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <div id="phaser-canvas"></div>
+  <!--Custom Javascript-->
+  <script type="text/javascript">
+    window.onload = function() {
+      var game = new Phaser.Game(720 , 960, Phaser.AUTO, 'phaser-canvas', {
+        preload: preload,
+        create: create
+      });
+
+      WebFontConfig = {
+
+        active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
+
+        google: {
+          families: ['Iceberg', 'Dosis']
+        }
+      };
+
+      function preload () {
+
+        game.load.image('background', 'img/start_background.png');
+        game.load.image('logo', 'img/start_logo.png');
+        game.load.image('info', 'img/start_info.png');
+        game.load.spritesheet('button', 'img/start_button.png', 296, 103);
+
+      } // end preload
+
+      function create () {
+
+        var spBackground = game.add.sprite(0, 0, 'background');
+        var spLogo = game.add.sprite(165, 60, 'logo');
+        var spInfo = game.add.sprite(110, 324, 'info');
+        var btButton = game.add.button(205, 815, 'button', actionOnClick, this, 1, 0, 2);
+
+      } // end create
+
+      function createText() {
+
+
+      } // end createText
+
+      function actionOnClick() {
+
+        console.log('Clicked!');
+
+      } // end actionOnClick
+
+    }; // end window.onload
+
+  </script>
+</body>
+
+</html>

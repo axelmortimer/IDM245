@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #c9deff;
+}
+
+#phaser-canvas{
+  margin: auto;
+  max-width: 720px;
+  max-height: 960px;
+  box-shadow: 0px 5px 40px 0px rgba(0,0,0,0.75);
+}
