@@ -88,20 +88,10 @@ gameObj.Play.prototype = {
     // Generate levels
     var height = 650;
     levels = this.game.add.group();
-    for (var l = 0; l < 300; l++) {
+    for (var l = 0; l < 1; l++) {
       this.createLevel(height);
-      // this.game.physics.enable(level, Phaser.Physics.ARCADE);
-      // setAllChildren(key, value, checkAlive, checkVisible, operation, force)
-      // level.body.immovable = true;
-      // level.body.allowGravity = false;
-      // level.body.checkCollision.down = false;
-      // level.body.checkCollision.left = false;
-      // level.body.checkCollision.right = false;
       height-=175;
     }
-    // console.log(levelGroup);
-
-
 
     // Capture certain keys to prevent their default actions in the browser.
     // This is only necessary because this is an HTML5 game. Games on other
@@ -149,8 +139,26 @@ gameObj.Play.prototype = {
     gameObj.gTime = displayMin + ':' + displaySec;
     txTime.text = 'TIME: ' + gameObj.gTime;
   },
-  createLevel: function(height) {
-    for (var x = 27; x <= ((Math.random() * (50 - 3) + 3) * 27); x += 27) {
+  createLevel: function(height) { // START POSITION CAN'T BE BIGGER THAN PLATFORM WIDTH, FIX YOUR FOR LOOP
+    var blockWidth = 27;
+    var startPosition = this.rnd.integerInRange(1, 25) * blockWidth;
+    console.log('Start Position', startPosition);
+    // var startPosition = 27;
+    var platformWidth = this.rnd.integerInRange(6, 18) * blockWidth;
+    console.log('Platform Width', platformWidth);
+    console.log('Block Width', blockWidth);
+    // var difference;
+    // console.log('Old Starting Position', startPosition);
+    // console.log('Platform Width', platformWidth);
+    // if ( (startPosition + platformWidth) >= 693 ) {
+    //   difference = (startPosition + platformWidth) - 693;
+    //   startPosition = startPosition - difference;
+    // } else {
+    //   difference = 0;
+    // }
+    // console.log('Difference', difference);
+    // console.log('New Starting Position', startPosition);
+    for (var x = startPosition; x <= platformWidth; x += blockWidth) {
         // Add the ground blocks, enable physics on each, make them immovable
         var levelBlock = this.game.add.sprite(x, height, 'block');
         this.game.physics.enable(levelBlock, Phaser.Physics.ARCADE);
