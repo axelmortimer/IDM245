@@ -6,7 +6,7 @@ gameObj.Play = function(game) {
   var timerSeconds; // Current timer seconds
   var spFloor; // Game floors
   var spCharacter; // Main Character
-  var levels;
+  var level;
 };
 
 gameObj.Play.prototype = {
@@ -86,10 +86,21 @@ gameObj.Play.prototype = {
     console.log('Floor enabled!');
 
     // Generate levels
-    var height = 650;
-    levels = this.game.add.group();
-    for (var l = 0; l < 300; l++) {
-      this.createLevel(height);
+    // var height = 600;
+    // levelGroup = this.game.add.group();
+    // for (var l = 0; l < 30; l++) {
+      level = this.game.add.group();
+      for (var x = 27; x <= ((Math.random() * (40 - 3) + 3) * 27); x += 27) {
+          // Add the ground blocks, enable physics on each, make them immovable
+          var levelBlock = this.game.add.sprite(x, 600, 'block');
+          this.game.physics.enable(levelBlock, Phaser.Physics.ARCADE);
+          levelBlock.body.immovable = true;
+          levelBlock.body.allowGravity = false;
+  	      levelBlock.body.checkCollision.down = false;
+          levelBlock.body.checkCollision.left = false;
+          levelBlock.body.checkCollision.right = false;
+          level.add(levelBlock);
+      }
       // this.game.physics.enable(level, Phaser.Physics.ARCADE);
       // setAllChildren(key, value, checkAlive, checkVisible, operation, force)
       // level.body.immovable = true;
@@ -97,8 +108,9 @@ gameObj.Play.prototype = {
       // level.body.checkCollision.down = false;
       // level.body.checkCollision.left = false;
       // level.body.checkCollision.right = false;
-      height-=175;
-    }
+      // levelGroup.add(level);
+      // height-=200;
+    // }
     // console.log(levelGroup);
 
 
@@ -149,19 +161,6 @@ gameObj.Play.prototype = {
     gameObj.gTime = displayMin + ':' + displaySec;
     txTime.text = 'TIME: ' + gameObj.gTime;
   },
-  createLevel: function(height) {
-    for (var x = 27; x <= ((Math.random() * (50 - 3) + 3) * 27); x += 27) {
-        // Add the ground blocks, enable physics on each, make them immovable
-        var levelBlock = this.game.add.sprite(x, height, 'block');
-        this.game.physics.enable(levelBlock, Phaser.Physics.ARCADE);
-        levelBlock.body.immovable = true;
-        levelBlock.body.allowGravity = false;
-        levelBlock.body.checkCollision.down = false;
-        levelBlock.body.checkCollision.left = false;
-        levelBlock.body.checkCollision.right = false;
-        levels.add(levelBlock);
-    }
-  },
   leftInputIsActive: function() {
     var isActive = false;
 
@@ -192,7 +191,7 @@ gameObj.Play.prototype = {
   },
   update: function () {
     this.game.physics.arcade.collide(spCharacter, spFloor);
-    this.game.physics.arcade.collide(spCharacter, levels);
+    this.game.physics.arcade.collide(spCharacter, level);
 
     if (this.leftInputIsActive()) {
         // If the LEFT key is down, set the spCharacter velocity to move left
